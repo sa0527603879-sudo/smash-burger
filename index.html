@@ -184,7 +184,7 @@ footer .credit b{color:var(--cream);font-weight:600}
 </style>
 </head>
 <body>
-<div id="stage"><img id="heroImg" src="22-burger-hero.webp" alt="Kosher smash burger" decoding="async"><div id="stack"></div></div>
+<div id="stage"><img id="heroImg" src="14-H2-hero.webp" alt="Kosher smash burger" decoding="async"><div id="stack"></div></div>
 <div id="vignette"></div>
 <div id="glow"></div>
 <div id="grain"></div>
@@ -266,12 +266,12 @@ const mobile=()=>innerWidth<=640;
 
 /* layers bottom -> top. f = display width / burger width, c = vertical center (fraction of burger height) when assembled, asp = image h/w */
 const defs=[
- {k:'bottom',f:.81,c:.85,asp:361/1117,src:'2-L-bottom.webp'},
- {k:'patty', f:.90,c:.66,asp:475/1242,src:'3-L-patty.webp'},
- {k:'tomato',f:.66,c:.50,asp:238/1069,src:'5-L-tomato.webp'},
- {k:'lettuce',f:.99,c:.40,asp:312/1268,src:'6-L-lettuce.webp'},
- {k:'top',   f:.81,c:.18,asp:458/1226,src:'7-L-top.webp'}];
-const ASP=0.793; /* burger height / width */
+ {k:'bottom',f:.84,c:.825,asp:.323,src:'12-L-bottom.webp'},
+ {k:'patty', f:.95,c:.658,asp:.266,src:'4-L-patty.webp'},
+ {k:'tomato',f:.67,c:.512,asp:.217,src:'17-T-tomato.webp'},
+ {k:'lettuce',f:.99,c:.45,asp:.230,src:'7-L-lettuce.webp'},
+ {k:'top',   f:.81,c:.196,asp:.350,src:'6-L-top.webp'}];
+const ASP=0.744; /* burger height / width */
 const layers=defs.map(d=>{const im=new Image();im.src=d.src;im.alt=d.k;im.decoding='async';im.style.opacity=0;stack.appendChild(im);return Object.assign({im},d);});
 let CW=500,CH=400,hw0=800,cyBase=0,exY=[];
 function size(){
