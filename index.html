@@ -297,7 +297,7 @@ function buildBurger(){
       x.beginPath();x.arc(px,py,r,0,7);x.fill();}
   });
   const pattyTex=tex(512,(x,s)=>{
-    x.fillStyle='#4e2a12';x.fillRect(0,0,s,s);
+    x.fillStyle='#46240f';x.fillRect(0,0,s,s);
     for(let i=0;i<5200;i++){const px=Math.random()*s,py=Math.random()*s,r=Math.random()*2.8+0.4;
       const k=Math.random();
       x.fillStyle=k<0.45?'rgba(30,14,5,0.62)':k<0.8?'rgba(88,46,18,0.55)':'rgba(160,98,44,0.4)';
@@ -363,7 +363,7 @@ function buildBurger(){
 
   /* patty */
   const pattyGeo=new THREE.CylinderGeometry(0.166,0.170,0.045,72,3);
-  displaceRadial(pattyGeo,0.006,30);
+  displaceRadial(pattyGeo,0.009,30);
   const patty=new THREE.Mesh(pattyGeo,pattyMat);patty.name='patty';patty.position.y=0.0925;
   G.add(patty);
 
@@ -430,14 +430,14 @@ const TINT={'bun-bottom':0xf7b45c,'bun-top':0xf7b45c,'patty':0x8a4a26,'salad':0x
   /* procedural sesame seeds on the crown */
   const bunTop=burger.getObjectByName('bun-top');
   if(bunTop){
-    const seedGeo=new THREE.SphereGeometry(0.0085,7,5);seedGeo.scale(1,0.5,2.1);
-    const seedMat=new THREE.MeshStandardMaterial({color:0xdfc998,roughness:0.65});
-    const seeds=new THREE.InstancedMesh(seedGeo,seedMat,110);
+    const seedGeo=new THREE.SphereGeometry(0.0072,7,5);seedGeo.scale(1,0.55,1.9);
+    const seedMat=new THREE.MeshStandardMaterial({color:0xd9bd8a,roughness:0.5});
+    const seeds=new THREE.InstancedMesh(seedGeo,seedMat,72);
     const ray=new THREE.Raycaster(),down=new THREE.Vector3(0,-1,0);
     const dummy=new THREE.Object3D();let placed=0,guard=0;
     while(placed<110&&guard<4000){
       guard++;
-      const a=Math.random()*Math.PI*2,rad=Math.sqrt(Math.random())*0.135;
+      const a=Math.random()*Math.PI*2,rad=Math.pow(Math.random(),0.7)*0.122;
       const x=Math.cos(a)*rad,z=Math.sin(a)*rad;
       ray.set(new THREE.Vector3(x+burger.position.x+bunTop.getWorldPosition(new THREE.Vector3()).x-burger.position.x,1,z),down);
       // raycast in world space
