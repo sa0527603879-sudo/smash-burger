@@ -339,6 +339,7 @@ function buildBurger(){
   const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.52,metalness:0,clearcoat:0.3,clearcoatRoughness:0.55,envMapIntensity:0.75});
   const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.85,metalness:0,clearcoat:0.02,envMapIntensity:0.7});
   const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,bumpMap:pattyBumpT,bumpScale:0.014,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.05,clearcoatRoughness:0.75,envMapIntensity:0.5,specularIntensity:0.6});
+  const pattyCapMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.03,clearcoatRoughness:0.85,envMapIntensity:0.45,specularIntensity:0.5});
   const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoPhoto,roughness:0.52,metalness:0,clearcoat:0.18,clearcoatRoughness:0.4,envMapIntensity:0.5,specularIntensity:0.35});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc03324,roughness:0.44,clearcoat:0.22,clearcoatRoughness:0.35,envMapIntensity:0.55,specularIntensity:0.4});
   const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.42,metalness:0,clearcoat:0.28,clearcoatRoughness:0.4,side:THREE.DoubleSide,envMapIntensity:0.9});
@@ -380,7 +381,7 @@ function buildBurger(){
     for(let i=0;i<p.count;i++){
       const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
       const ang=Math.atan2(z,x),rad=Math.sqrt(x*x+z*z);
-      if(Math.abs(nrm.getY(i))>0.5){p.setY(i,y+(fbm(x*38+1.7,z*38+4.2)-0.5)*0.004);continue;} // cap faces: no radial fan grooves
+      if(Math.abs(nrm.getY(i))>0.5)continue; // cap faces stay perfectly flat: no fan grooves, no facet artifacts
       if(rad<0.02)continue;
       const rim=Math.min(1,Math.abs(y)/0.0225);
       const lobe=fbm(Math.cos(ang)*2.2+5.5,Math.sin(ang)*2.2+7.7)*2-1;
@@ -392,7 +393,7 @@ function buildBurger(){
     }
     pattyGeo.computeVertexNormals();
   }
-  const patty=new THREE.Mesh(pattyGeo,pattyMat);patty.name='patty';patty.position.y=0.0925;
+  const patty=new THREE.Mesh(pattyGeo,[pattyMat,pattyCapMat,pattyCapMat]);patty.name='patty';patty.position.y=0.0925;
   G.add(patty);
 
   /* lettuce */
@@ -674,4 +675,4 @@ addEventListener('scroll',()=>{document.querySelector('nav').classList.toggle('s
 tick();
 </script>
 </body>
-                          </html>
+    </html>
