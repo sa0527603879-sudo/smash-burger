@@ -126,7 +126,7 @@ nav{
   white-space:nowrap;
 }
 .build-stage{
-  position:relative;width:min(78vw,460px);height:min(78vw,460px);
+  position:relative;width:min(78vw,380px);height:min(78vw,460px);
 }
 .build-layer{
   position:absolute;left:50%;top:50%;
@@ -406,14 +406,23 @@ footer .credit b{color:var(--cream);font-weight:600}
   function layoutStack(){
     var stage = document.getElementById('buildStage');
     var W = stage.offsetWidth, H = stage.offsetHeight;
-    var bottomEdge = H * 0.34; /* px below center */
-    var y = bottomEdge;
-    var centers = [];
-    layers.forEach(function(l,i){
+    /* first pass: measure each layer height at its data-w width */
+    var hs = layers.map(function(l){
       var img = l.querySelector('img');
       var w = W * parseFloat(l.dataset.w||'1');
       var h = w * (img.naturalHeight/img.naturalWidth || 0.5);
       l.style.width = w+'px';
+      return h;
+    });
+    /* total stack height with the 14% tuck on every layer above the first */
+    var total = hs[0];
+    for(var k=1;k<hs.length;k++){ total += hs[k]*0.86; }
+    /* anchor so the full stack sits centered, nudged up for caption room */
+    var bottomEdge = total/2 - H*0.08;
+    var y = bottomEdge;
+    var centers = [];
+    layers.forEach(function(l,i){
+      var h = hs[i];
       if(i===0){ y -= h/2; centers.push(y); y -= h/2; }
       else { y += h*0.14; y -= h/2; centers.push(y); y -= h/2; }
     });
