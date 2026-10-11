@@ -75,7 +75,7 @@ nav.scrolled{mix-blend-mode:normal;background:rgba(18,14,11,.82);backdrop-filter
 .build-kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
 .build-title{font-family:'Fraunces',serif;font-size:clamp(30px,3.6vw,52px);font-weight:600;line-height:1.05}
 .build-title i{color:var(--amber)}
-.layer-label{position:absolute;right:6vw;top:50%;text-align:right;opacity:0;transition:opacity .4s ease,transform .4s ease}
+.layer-label{position:absolute;right:6vw;top:50%;text-align:right;opacity:0;transition:transform .35s ease}
 .layer-label .num{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--amber)}
 .layer-label .name{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(26px,3.4vw,50px);line-height:1.05;margin:4px 0 8px}
 .layer-label .desc{font-size:12.5px;color:var(--muted);letter-spacing:.06em;max-width:240px;margin-left:auto}
@@ -162,6 +162,7 @@ footer .credit b{color:var(--cream);font-weight:600}
 .hero h1 .row{white-space:nowrap}
 .hero h1{font-size:clamp(64px,17vw,250px)}
 .layer-label{position:absolute}
+.layer-label:not(.on){pointer-events:none}
 @media(min-width:641px){.layer-label::before{content:'';position:absolute;right:100%;top:.9em;width:var(--lead,60px);height:1px;background:rgba(255,122,26,.55);margin-right:16px}}
 .card .img{background:#0a0806}
 .statement{padding:16vh 8vw}
@@ -176,7 +177,9 @@ footer .credit b{color:var(--cream);font-weight:600}
  .nav-links{display:flex;gap:16px;font-size:10px;letter-spacing:.16em}
  nav{padding:20px 6vw}
  .logo{font-size:19px}
- .layer-label{bottom:3vh}
+ .layer-label{bottom:7.5vh}
+ .build-progress{flex-direction:row;left:50%;right:auto;transform:translateX(-50%);bottom:3.2vh;gap:8px}
+ .build-progress .tick{width:22px}
 }
 </style>
 </head>
@@ -188,7 +191,7 @@ footer .credit b{color:var(--cream);font-weight:600}
 <main>
 <nav>
   <div class="logo">SMASH<i>.</i></div>
-  <div class="nav-links"><a href="#build">The Build</a><a href="#menu">Menu</a><a href="#find">Find Us</a></div>
+  <div class="nav-links"><a href="#build">The Build</a><a href="#menu">Menu</a><a href="#find">Get Yours</a></div>
 </nav>
 
 <section class="hero">
@@ -231,12 +234,12 @@ footer .credit b{color:var(--cream);font-weight:600}
     <p>Three builds.<br>One grill.<br>Sun—Thu 12:00—23:00 · Fri till Shabbat</p>
   </div>
   <div class="menu-grid">
-    <div class="card"><div class="img"><img src="9-C-classic.jpg" alt="The Classic"></div>
-      <div class="body"><div><h3>The Classic</h3><p>Single smashed patty, lettuce, tomato, onion jam, house sauce.</p></div><div class="price">₪48</div></div></div>
-    <div class="card"><div class="img"><img src="16-C-double.jpg" alt="Double Trouble"></div>
-      <div class="body"><div><h3>Double Trouble</h3><p>Two patties, double crust, pickles, charred onion, smoke sauce.</p></div><div class="price">₪62</div></div></div>
-    <div class="card"><div class="img"><img src="18-C-ember.jpg" alt="The Ember"></div>
-      <div class="body"><div><h3>The Ember</h3><p>Chili-crisp patty, grilled jalapeño, ember mayo, crunch.</p></div><div class="price">₪58</div></div></div>
+    <div class="card"><div class="img"><img src="3-D-classic.jpg" alt="The Classic"></div>
+      <div class="body"><div><h3>The Classic</h3><p>One thin smashed patty, lettuce, tomato, sesame brioche.</p></div><div class="price">₪48</div></div></div>
+    <div class="card"><div class="img"><img src="4-D-double.jpg" alt="Double Trouble"></div>
+      <div class="body"><div><h3>Double Trouble</h3><p>Two thin smashed patties, pickles, charred onion, smoke sauce.</p></div><div class="price">₪62</div></div></div>
+    <div class="card"><div class="img"><img src="6-D-ember.jpg" alt="The Ember"></div>
+      <div class="body"><div><h3>The Ember</h3><p>Two thin patties, grilled jalapeño, lettuce, ember mayo.</p></div><div class="price">₪58</div></div></div>
   </div>
   <div class="photo-credit">Imagery: AI-generated photography for this concept</div>
 </section>
@@ -273,7 +276,7 @@ const layers=defs.map(d=>{const im=new Image();im.src=d.src;im.alt=d.k;im.decodi
 let CW=500,CH=400,hw0=800,cyBase=0,exY=[];
 function size(){
   const vh=innerHeight,vw=innerWidth;
-  CW=mobile()?Math.min(vw*0.8,vh*0.4):Math.min(vw*0.4,vh*0.52,560);
+  CW=mobile()?Math.min(vw*0.8,vh*0.35):Math.min(vw*0.4,vh*0.52,560);
   CH=CW*ASP;
   hw0=mobile()?vw*1.02:Math.min(vw*0.78,vh*1.05*1.1,900);
   heroImg.style.width=hw0+'px';
@@ -298,12 +301,13 @@ function render(){
   const buildEl=document.querySelector('.build');
   const buildStart=buildEl.offsetTop,buildEnd=buildStart+buildEl.offsetHeight-vh;
   const t=cl((sy-buildStart)/(buildEnd-buildStart));
-  const cy=mobile()?vh*0.5:vh*0.54;
+  const cy=mobile()?vh*0.475:vh*0.54;
   /* hero phase: the hero burger shrinks to the assembled stack size and position */
   const hp=ease(cl(sy/buildStart));
   const heroY=mobile()?vh*0.62:vh*0.56;
   const sc0=1+((CW/hw0)-1)*hp;
   const yy=heroY+(cy-heroY)*hp;
+  const bh=document.querySelector('.build-head');if(bh)bh.style.opacity=cl((sy/buildStart-0.93)/0.07).toFixed(3);
   heroImg.style.opacity=((sy<buildStart-1?1:cl(1-t/0.02))*intro.v).toFixed(3);
   heroImg.style.transform=`translate(-50%,-50%) translate(${smx*10*(1-hp)}px,${yy-vh/2+float*5*(1-hp)}px) scale(${sc0})`;
   /* build phase */
