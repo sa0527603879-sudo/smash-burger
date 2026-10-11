@@ -241,7 +241,7 @@ gsap.registerPlugin(ScrollTrigger);
 const stage=document.getElementById('stage'),heroImg=document.getElementById('heroImg'),stack=document.getElementById('stack');
 const mobile=()=>innerWidth<=640;
 /* layers bottom -> top: [file, aspect h/w, assembled y offset (in stack widths), width factor] */
-const defs=[['bottom',612/900,0.00,1.0],['patty',569/900,-0.05,0.97],['lettuce',695/900,-0.115,1.02],['tomato',620/900,-0.17,0.9],['top',549/900,-0.26,0.96]];
+const defs=[['bottom',612/900,0.00,1.0],['patty',569/900,-0.08,0.97],['lettuce',695/900,-0.15,1.0],['tomato',620/900,-0.215,0.86],['top',549/900,-0.37,0.96]];
 const layers=defs.map(d=>{const im=new Image();im.src=({bottom:'38-burger-bottom.webp',patty:'37-burger-patty.webp',lettuce:'40-burger-lettuce.webp',tomato:'42-burger-tomato.webp',top:'33-burger-top.webp'})[d[0]];im.alt=d[0];im.decoding='async';im.style.opacity=0;stack.appendChild(im);return {im,asp:d[1],y:d[2],wf:d[3]};});
 let W=600;
 function size(){
@@ -259,7 +259,7 @@ const ticks=[...document.querySelectorAll('#ticks .tick')];
 const slamWord=document.getElementById('slamWord');
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
-let float=0;
+let float=0;const intro={v:0};
 function render(){
   const sy=scrollY,vh=innerHeight;
   const buildEl=document.querySelector('.build');
@@ -268,15 +268,18 @@ function render(){
   const inBuild=sy>=buildStart-vh*0.9;
   const cy=mobile()?vh*0.55:vh*0.55;
   /* hero phase */
-  const hp=cl(sy/vh);
-  const heroOp=sy<buildStart-vh*0.0?1-cl((sy-(buildStart-vh*0.6))/(vh*0.6)):0;
+  const hp=ease(cl(sy/buildStart));
+  const hw=parseFloat(heroImg.style.width)||W;
   const heroY=mobile()?vh*0.66:vh*0.56;
-  heroImg.style.opacity=(sy<buildStart-1?heroOp:cl(1-t*14)).toFixed(3);
-  heroImg.style.transform=`translate(-50%,-50%) translate(${smx*14}px,${heroY-vh/2+float*8-hp*vh*0.1+smy*8}px) scale(${1+hp*0.06}) rotate(${smx*0.8}deg)`;
+  const tgtScale=(W*1.04)/hw;
+  const sc0=1+(tgtScale-1)*hp;
+  const yy=heroY+(cy-heroY)*hp;
+  heroImg.style.opacity=((sy<buildStart-1?1:cl(1-t/0.015))*intro.v).toFixed(3);
+  heroImg.style.transform=`translate(-50%,-50%) translate(${smx*14*(1-hp)}px,${yy-vh/2+float*6*(1-hp)}px) scale(${sc0})`;
   /* build phase */
-  const ex=t<0.62?ease(cl(t/0.62)):1;
+  const ex=t<0.55?ease(cl(t/0.55)):1;
   const sl=t>0.82?(t-0.82)/0.18:0;
-  const reveal=cl((t-0.0)*14); // layers fade in as hero image fades out
+  const reveal=cl(t/0.015); // layers fade in as hero image fades out
   const spacing=W*(mobile()?0.27:0.3);
   const spin=(t<0.82?(t-0.1)*0.0:0);
   layers.forEach((l,i)=>{
@@ -319,7 +322,7 @@ function render(){
   const row=document.getElementById('h1row');row.innerHTML='';
   'SMASH.'.split('').forEach(ch=>{const s=document.createElement('span');s.className='ch';s.textContent=ch;if(ch==='.')s.style.color='var(--amber)';row.appendChild(s);});
   gsap.to('.ch',{y:0,duration:1.2,stagger:0.055,ease:'power4.out',delay:0.25});
-  gsap.from('#heroImg',{scale:.86,duration:1.6,ease:'power3.out',delay:.1});
+  gsap.to(intro,{v:1,duration:1.2,delay:.1});
 })();
 /* marquee */
 (function(){
