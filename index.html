@@ -326,7 +326,7 @@ function buildBurger(){
     for(let i=1;i<6;i++){x.beginPath();x.moveTo(s*0.12*i,s*0.92);x.quadraticCurveTo(s*0.45,s*0.55-i*6,s*0.8,s*0.12+i*10);x.stroke();}
   });
 
-  const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.48,metalness:0,clearcoat:0.35,clearcoatRoughness:0.5,envMapIntensity:1.1});
+  const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.52,metalness:0,clearcoat:0.3,clearcoatRoughness:0.55,envMapIntensity:0.75});
   const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.78,metalness:0,clearcoat:0.08,envMapIntensity:0.9});
   const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyTex,roughness:0.82,metalness:0,clearcoat:0.08,envMapIntensity:0.7});
   const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoTex,roughness:0.6,metalness:0,clearcoat:0.05,clearcoatRoughness:0.7,envMapIntensity:0.08});
