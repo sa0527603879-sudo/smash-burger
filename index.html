@@ -69,7 +69,7 @@ nav.scrolled{mix-blend-mode:normal;background:rgba(18,14,11,.82);backdrop-filter
 .hero-est{text-align:right;font-size:12px;color:var(--muted);letter-spacing:.15em;line-height:2}
 
 /* ---------- build (pinned 3d) ---------- */
-.build{height:520vh}
+.build{height:480vh}
 .build-inner{position:sticky;top:0;height:100vh;overflow:hidden}
 .build-head{position:absolute;top:12vh;left:5vw;max-width:300px}
 .build-kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
@@ -158,6 +158,26 @@ footer .credit b{color:var(--cream);font-weight:600}
 .card .img img{filter:saturate(1.02) contrast(1.04) brightness(.95)!important}
 .hero-tag,.hero-kosher,.hero-est,.scroll-hint{position:relative;z-index:1}
 @media(min-width:641px){.layer-label{max-width:min(330px,24vw)}.layer-label .name{font-size:clamp(26px,2.8vw,44px)}}
+
+.hero h1 .row{white-space:nowrap}
+.hero h1{font-size:clamp(64px,17vw,250px)}
+.layer-label{position:absolute}
+@media(min-width:641px){.layer-label::before{content:'';position:absolute;right:100%;top:.9em;width:var(--lead,60px);height:1px;background:rgba(255,122,26,.55);margin-right:16px}}
+.card .img{background:#0a0806}
+.statement{padding:16vh 8vw}
+.statement .w{opacity:.2}
+@media(max-width:640px){
+ .hero{justify-content:flex-start;gap:0;padding:92px 6vw 28px}
+ .hero-top{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px 14px}
+ .hero-kosher{position:static!important;margin:0}
+ .hero-tag{max-width:none;width:100%;order:2;line-height:1.7;font-size:10px}
+ .hero h1{font-size:clamp(60px,21vw,120px);margin-top:3vh}
+ .hero-bottom{margin-top:auto}
+ .nav-links{display:flex;gap:16px;font-size:10px;letter-spacing:.16em}
+ nav{padding:20px 6vw}
+ .logo{font-size:19px}
+ .layer-label{bottom:3vh}
+}
 </style>
 </head>
 <body>
@@ -179,7 +199,7 @@ footer .credit b{color:var(--cream);font-weight:600}
   <h1><span class="row" id="h1row">SMASH<span class="dot">.</span></span></h1>
   <div class="hero-bottom">
     <div class="scroll-hint"><div class="bar"></div><span>Scroll to build</span></div>
-    <div class="hero-est">EST. 2026<br>TEL AVIV — YAFO</div>
+    <div class="hero-est">A CONCEPT BY SLIGI<br>TEL AVIV — YAFO</div>
   </div>
 </section>
 
@@ -189,11 +209,11 @@ footer .credit b{color:var(--cream);font-weight:600}
       <div class="build-kicker">Anatomy of a Smash</div>
       <div class="build-title">Five layers.<br><i>Zero</i> shortcuts.</div>
     </div>
-    <div class="layer-label" data-layer="4"><div class="num">05</div><div class="name">Toasted Brioche Crown</div><div class="desc">Butter-toasted on the cut face, sesame on top, soft in the middle.</div></div>
-    <div class="layer-label" data-layer="3"><div class="num">04</div><div class="name">Vine Tomato</div><div class="desc">Sliced thick, salted sixty seconds before it hits the stack.</div></div>
-    <div class="layer-label" data-layer="2"><div class="num">03</div><div class="name">Crisp Lettuce</div><div class="desc">Ice-cold crunch against the hot crust. The contrast is the point.</div></div>
-    <div class="layer-label" data-layer="1"><div class="num">02</div><div class="name">The Smashed Patty</div><div class="desc">Pressed thin, seared hard. Crust like crackling, center still blushing.</div></div>
-    <div class="layer-label" data-layer="0"><div class="num">01</div><div class="name">The Base</div><div class="desc">Built to hold the juice. Structural integrity is a flavor.</div></div>
+    <div class="layer-label" data-layer="0"><div class="num">01</div><div class="name">The Base</div><div class="desc">Toasted on the plancha. Built to hold the juice - structural integrity is a flavor.</div></div>
+    <div class="layer-label" data-layer="1"><div class="num">02</div><div class="name">Smashed Patties</div><div class="desc">Pressed thin, seared hard. Crust like crackling, center still blushing.</div></div>
+    <div class="layer-label" data-layer="2"><div class="num">03</div><div class="name">Vine Tomato</div><div class="desc">Sliced thick, salted sixty seconds before it hits the stack.</div></div>
+    <div class="layer-label" data-layer="3"><div class="num">04</div><div class="name">Crisp Lettuce</div><div class="desc">Ice-cold crunch against the hot crust. The contrast is the point.</div></div>
+    <div class="layer-label" data-layer="4"><div class="num">05</div><div class="name">Sesame Brioche Crown</div><div class="desc">Glossy on top, sesame-studded, soft in the middle.</div></div>
     <div class="build-progress" id="ticks"><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div></div>
     <div class="slam-word"><span id="slamWord">stacked.</span></div>
   </div>
@@ -208,23 +228,23 @@ footer .credit b{color:var(--cream);font-weight:600}
 <section class="menu" id="menu">
   <div class="menu-head">
     <h2>THE<br>LINEUP</h2>
-    <p>Three builds.<br>One grill.<br>Every day 12:00—23:00</p>
+    <p>Three builds.<br>One grill.<br>Sun—Thu 12:00—23:00 · Fri till Shabbat</p>
   </div>
   <div class="menu-grid">
-    <div class="card"><div class="img"><img src="34-burger-classic.jpg" alt="The Classic"></div>
+    <div class="card"><div class="img"><img src="9-C-classic.jpg" alt="The Classic"></div>
       <div class="body"><div><h3>The Classic</h3><p>Single smashed patty, lettuce, tomato, onion jam, house sauce.</p></div><div class="price">₪48</div></div></div>
-    <div class="card"><div class="img"><img src="45-burger-double.jpg" alt="Double Trouble"></div>
+    <div class="card"><div class="img"><img src="16-C-double.jpg" alt="Double Trouble"></div>
       <div class="body"><div><h3>Double Trouble</h3><p>Two patties, double crust, pickles, charred onion, smoke sauce.</p></div><div class="price">₪62</div></div></div>
-    <div class="card"><div class="img"><img src="47-burger-ember.jpg" alt="The Ember"></div>
+    <div class="card"><div class="img"><img src="18-C-ember.jpg" alt="The Ember"></div>
       <div class="body"><div><h3>The Ember</h3><p>Chili-crisp patty, grilled jalapeño, ember mayo, crunch.</p></div><div class="price">₪58</div></div></div>
   </div>
   <div class="photo-credit">Imagery: AI-generated photography for this concept</div>
 </section>
 
 <section class="outro" id="find">
-  <p>Open every day · 12:00—23:00</p>
+  <p>Concept · Closed on Shabbat</p>
   <h2>COME<br><i>HUNGRY.</i></h2>
-  <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Yafo+Tel+Aviv" target="_blank" rel="noopener">Find the truck →</a>
+  <a class="btn" href="https://sligi.co.il" target="_blank" rel="noopener">Build yours with sligi →</a>
 </section>
 
 <footer>
@@ -240,80 +260,90 @@ footer .credit b{color:var(--cream);font-weight:600}
 gsap.registerPlugin(ScrollTrigger);
 const stage=document.getElementById('stage'),heroImg=document.getElementById('heroImg'),stack=document.getElementById('stack');
 const mobile=()=>innerWidth<=640;
-/* layers bottom -> top: [file, aspect h/w, assembled y offset (in stack widths), width factor] */
-const defs=[['bottom',612/900,0.00,1.0],['patty',569/900,-0.08,0.97],['lettuce',695/900,-0.15,1.0],['tomato',620/900,-0.215,0.86],['top',549/900,-0.37,0.96]];
-const layers=defs.map(d=>{const im=new Image();im.src=({bottom:'38-burger-bottom.webp',patty:'37-burger-patty.webp',lettuce:'40-burger-lettuce.webp',tomato:'42-burger-tomato.webp',top:'33-burger-top.webp'})[d[0]];im.alt=d[0];im.decoding='async';im.style.opacity=0;stack.appendChild(im);return {im,asp:d[1],y:d[2],wf:d[3]};});
-let W=600;
+
+/* layers bottom -> top. f = display width / burger width, c = vertical center (fraction of burger height) when assembled, asp = image h/w */
+const defs=[
+ {k:'bottom',f:.81,c:.85,asp:361/1117,src:'2-L-bottom.webp'},
+ {k:'patty', f:.90,c:.66,asp:475/1242,src:'3-L-patty.webp'},
+ {k:'tomato',f:.66,c:.50,asp:238/1069,src:'5-L-tomato.webp'},
+ {k:'lettuce',f:.99,c:.40,asp:312/1268,src:'6-L-lettuce.webp'},
+ {k:'top',   f:.81,c:.18,asp:458/1226,src:'7-L-top.webp'}];
+const ASP=0.793; /* burger height / width */
+const layers=defs.map(d=>{const im=new Image();im.src=d.src;im.alt=d.k;im.decoding='async';im.style.opacity=0;stack.appendChild(im);return Object.assign({im},d);});
+let CW=500,CH=400,hw0=800,cyBase=0,exY=[];
 function size(){
-  W=mobile()?innerWidth*0.68:Math.min(innerWidth*0.36,innerHeight*0.4,420);
-  const hw=mobile()?innerWidth*0.92:Math.min(innerWidth*0.78,innerHeight*1.05*1.1,900);
-  heroImg.style.width=hw+'px';
-  layers.forEach(l=>{l.im.style.width=(W*l.wf)+'px';});
+  const vh=innerHeight,vw=innerWidth;
+  CW=mobile()?Math.min(vw*0.8,vh*0.4):Math.min(vw*0.4,vh*0.52,560);
+  CH=CW*ASP;
+  hw0=mobile()?vw*1.02:Math.min(vw*0.78,vh*1.05*1.1,900);
+  heroImg.style.width=hw0+'px';
+  layers.forEach(l=>{l.w=l.f*CW;l.h=l.w*l.asp;l.im.style.width=l.w+'px';});
+  /* exploded layout: stack layers with air between them, centered on 0 */
+  const air=mobile()?CH*0.07:CH*0.09,k=0.8;
+  let ys=[0];for(let i=1;i<layers.length;i++){ys.push(ys[i-1]-((layers[i-1].h+layers[i].h)/2*k+air));}
+  const mid=(ys[0]+ys[ys.length-1])/2;exY=ys.map(y=>y-mid);
 }
 size();addEventListener('resize',()=>{size();render();ScrollTrigger.refresh();});
-let mx=0,my=0,smx=0,smy=0,scrollT=0;
+let mx=0,my=0,smx=0,smy=0;
 addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2;});
-ScrollTrigger.create({trigger:'.build',start:'top top',end:'bottom bottom',scrub:true,onUpdate(s){scrollT=s.progress;}});
 const labels=[...document.querySelectorAll('.layer-label')];
 const ticks=[...document.querySelectorAll('#ticks .tick')];
 const slamWord=document.getElementById('slamWord');
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 let float=0;const intro={v:0};
+const T_EX=0.10,T_SEG=0.136,T_SL=0.78,T_SL2=0.90;
 function render(){
-  const sy=scrollY,vh=innerHeight;
+  const sy=scrollY,vh=innerHeight,vw=innerWidth;
   const buildEl=document.querySelector('.build');
   const buildStart=buildEl.offsetTop,buildEnd=buildStart+buildEl.offsetHeight-vh;
   const t=cl((sy-buildStart)/(buildEnd-buildStart));
-  const inBuild=sy>=buildStart-vh*0.9;
-  const cy=mobile()?vh*0.55:vh*0.55;
-  /* hero phase */
+  const cy=mobile()?vh*0.5:vh*0.54;
+  /* hero phase: the hero burger shrinks to the assembled stack size and position */
   const hp=ease(cl(sy/buildStart));
-  const hw=parseFloat(heroImg.style.width)||W;
-  const heroY=mobile()?vh*0.66:vh*0.56;
-  const tgtScale=(W*1.04)/hw;
-  const sc0=1+(tgtScale-1)*hp;
+  const heroY=mobile()?vh*0.62:vh*0.56;
+  const sc0=1+((CW/hw0)-1)*hp;
   const yy=heroY+(cy-heroY)*hp;
-  heroImg.style.opacity=((sy<buildStart-1?1:cl(1-t/0.015))*intro.v).toFixed(3);
-  heroImg.style.transform=`translate(-50%,-50%) translate(${smx*14*(1-hp)}px,${yy-vh/2+float*6*(1-hp)}px) scale(${sc0})`;
+  heroImg.style.opacity=((sy<buildStart-1?1:cl(1-t/0.02))*intro.v).toFixed(3);
+  heroImg.style.transform=`translate(-50%,-50%) translate(${smx*10*(1-hp)}px,${yy-vh/2+float*5*(1-hp)}px) scale(${sc0})`;
   /* build phase */
-  const ex=t<0.55?ease(cl(t/0.55)):1;
-  const sl=t>0.82?(t-0.82)/0.18:0;
-  const reveal=cl(t/0.015); // layers fade in as hero image fades out
-  const spacing=W*(mobile()?0.27:0.3);
-  const spin=(t<0.82?(t-0.1)*0.0:0);
+  const ex=ease(cl(t/T_EX))*(t<T_SL?1:1-ease(cl((t-T_SL)/(T_SL2-T_SL)*1.6)));
+  const seg=t>=T_EX&&t<T_SL?Math.min(4,Math.floor((t-T_EX)/T_SEG)):-1;
+  const segP=seg>=0?cl((t-T_EX-seg*T_SEG)/T_SEG):0;
+  const reveal=cl(t/0.02);
   layers.forEach((l,i)=>{
-    const st=cl(ex*1.35-i*0.06,0,1);
-    const e=ease(st)*(t<0.82?1:1-ease(cl(sl*1.7)));
-    const y=cy+(l.y*W*0.9)-e*(i-2)*spacing;
-    const rot=Math.sin(t*6+i*1.3)*e*1.4+smx*e*1.8;
-    const sc=1+(sl>0&&sl<0.5?0:0);
-    l.im.style.opacity=(t>=0?reveal:0).toFixed(3);
-    l.im.style.transform=`translate(-50%,-50%) translate(${smx*e*10}px,${y-vh/2+ smy*e*6}px) rotate(${rot}deg) scale(${sc})`;
+    const asm=cy-CH/2+l.c*CH;                 /* assembled center y */
+    const exp=cy+exY[i];                      /* exploded center y */
+    let yv=asm+(exp-asm)*ex;
+    const act=(i===seg);
+    const lift=act?Math.sin(segP*Math.PI)*(mobile()?6:10):0;
+    const sc=act?1+0.05*Math.sin(Math.min(1,segP*3)*Math.PI/2):1;
+    const dim=(seg>=0&&!act)?0.55:1;
+    const e=ex;
+    l.im.style.opacity=(reveal*(1-(1-dim)*e)).toFixed(3);
+    l.im.style.transform=`translate(-50%,-50%) translate(${smx*e*8}px,${yv-vh/2-lift}px) scale(${sc})`;
     l.im.style.zIndex=i;
+    l.cy=yv;
   });
-  /* hide layers when not in build */
   stack.style.visibility=(sy>buildStart-vh*0.2)?'visible':'hidden';
   /* labels + ticks */
-  const activeIdx=cl(Math.floor(ex*5.5),0,4);
-  const showLabels=ex>0.25&&sl<0.5&&t>0;
   labels.forEach(lb=>{
-    const idx=+lb.dataset.layer,on=showLabels&&idx===activeIdx;
+    const idx=+lb.dataset.layer,on=seg===idx;
     lb.classList.toggle('on',on);
-    if(on&&innerWidth>640){
-      const l=layers[idx];const m=l.im.getBoundingClientRect();
-      lb.style.top=cl(m.top+m.height*0.5,150,vh-170)+'px';
-    }else if(innerWidth<=640){lb.style.top='auto';}
+    if(on&&!mobile()){
+      const l=layers[idx];
+      lb.style.top=cl(l.cy,150,vh-150)+'px';
+      const rx=vw/2+l.w/2,lx=lb.getBoundingClientRect().left;
+      lb.style.setProperty('--lead',Math.max(24,lx-rx-26)+'px');
+    }else if(mobile()){lb.style.top='auto';}
   });
-  ticks.forEach((tk,i)=>tk.classList.toggle('on',ex>(i+1)/6));
-  const showSlam=sl>0.55&&sl<0.97;
-  slamWord.style.opacity=showSlam?String(Math.max(0,1-Math.abs(sl-0.78)*2.6)*0.95):'0';
+  ticks.forEach((tk,i)=>tk.classList.toggle('on',seg>=0?i<=seg:(t>=T_SL)));
+  const sl=t>=T_SL?(t-T_SL)/(1-T_SL):0;
+  const showSlam=sl>0.15&&sl<0.75;
+  slamWord.style.opacity=showSlam?String(Math.max(0,1-Math.abs(sl-0.45)*3)*0.95):'0';
   slamWord.style.transform=`scale(${1.4-sl*0.55})`;
-  /* stage visibility: off between build and outro */
-  const outroTop=document.querySelector('.outro').offsetTop-vh*0.75;
-  let op=1;if(sy>buildEnd+vh*0.6&&sy<outroTop)op=0;
-  /* fade out past build end */
-  if(sy>buildEnd)op=cl(1-(sy-buildEnd)/(vh*0.6));
+  /* stage visibility */
+  let op=1;if(sy>buildEnd)op=cl(1-(sy-buildEnd)/(vh*0.6));
   stage.style.opacity=op.toFixed(3);
 }
 (function loop(){float=Math.sin(performance.now()/1400);smx+=(mx-smx)*.06;smy+=(my-smy)*.06;render();requestAnimationFrame(loop);})();
@@ -341,8 +371,8 @@ function render(){
     return part.split(' ').filter(Boolean).map(w=>`<span class="w">${w}</span>`).join(' ');
   }).join(' ');
   const words=[...st.querySelectorAll('.w')];
-  ScrollTrigger.create({trigger:'.statement',start:'top 75%',end:'bottom 65%',scrub:true,
-    onUpdate(s){const n=Math.floor(s.progress*words.length);words.forEach((w,i)=>w.classList.toggle('lit',i<=n));}});
+  ScrollTrigger.create({trigger:'.statement',start:'top 80%',end:'bottom 80%',scrub:true,
+    onUpdate(s){const n=Math.floor(Math.min(1,s.progress*1.2)*words.length);words.forEach((w,i)=>w.classList.toggle('lit',i<=n));}});
 })();
 
 /* menu cards reveal */
