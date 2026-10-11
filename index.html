@@ -426,8 +426,10 @@ footer .credit b{color:var(--cream);font-weight:600}
       if(i===0){ y -= h/2; centers.push(y); y -= h/2; }
       else { y += h*0.14; y -= h/2; centers.push(y); y -= h/2; }
     });
+    layerHs = hs;
     return centers;
   }
+  var layerHs = [];
   var restY = layoutStack();
   window.addEventListener('load', function(){ restY = layoutStack(); if(!hasGsap||reduced){applyRest();} else { ScrollTrigger.refresh(); } });
   window.addEventListener('resize', function(){ restY = layoutStack(); if(!hasGsap||reduced){applyRest();} else {ScrollTrigger.refresh();} });
@@ -437,13 +439,13 @@ footer .credit b{color:var(--cream);font-weight:600}
 
   if (hasGsap && !reduced){
     layers.forEach(function(l,i){
-      gsap.set(l,{y: i===0 ? restY[0] : restY[i]-420, opacity: i===0?1:0, rotate: i===0?0:(i%2? 9:-9)});
+      gsap.set(l,{y: (i===0 ? restY[0] : restY[i]-420) - (layerHs[i]||0)/2, opacity: i===0?1:0, rotate: i===0?0:(i%2? 9:-9)});
     });
     var buildTl = gsap.timeline({
       scrollTrigger:{
         trigger:'#build', start:'top top', end:'+=' + (layers.length*90) + '%',
         pin:'#buildPin', scrub:0.6, invalidateOnRefresh:true,
-        onRefresh:function(){ restY = layoutStack(); layers.forEach(function(l,i){ if(i===0) gsap.set(l,{y:restY[0]}); }); },
+        onRefresh:function(){ restY = layoutStack(); layers.forEach(function(l,i){ if(i===0) gsap.set(l,{y:restY[0]-(layerHs[0]||0)/2}); }); },
         onUpdate:function(self){
           var idx = Math.min(layers.length-1, Math.floor(self.progress * layers.length));
           dots.forEach(function(dd,j){ dd.classList.toggle('on', j<=idx); });
@@ -456,7 +458,7 @@ footer .credit b{color:var(--cream);font-weight:600}
     });
     layers.forEach(function(l,i){
       if(i===0) return;
-      buildTl.to(l,{y:function(){return restY[i];},opacity:1,rotate:0,ease:'bounce.out',duration:1},(i-1)+0.35);
+      buildTl.to(l,{y:function(idx){return restY[idx]-(layerHs[idx]||0)/2;},opacity:1,rotate:0,ease:'bounce.out',duration:1},(i-1)+0.35);
     });
     buildTl.to('#buildStage',{scale:1.04,duration:0.6},'>-0.2');
   } else {
