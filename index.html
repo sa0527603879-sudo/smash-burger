@@ -458,7 +458,7 @@ footer .credit b{color:var(--cream);font-weight:600}
     });
     layers.forEach(function(l,i){
       if(i===0) return;
-      buildTl.to(l,{y:function(idx){return restY[idx]-(layerHs[idx]||0)/2;},opacity:1,rotate:0,ease:'bounce.out',duration:1},(i-1)+0.35);
+      buildTl.to(l,{y:function(){return restY[i]-(layerHs[i]||0)/2;},opacity:1,rotate:0,ease:'bounce.out',duration:1},(i-1)+0.35);
     });
     buildTl.to('#buildStage',{scale:1.04,duration:0.6},'>-0.2');
   } else {
