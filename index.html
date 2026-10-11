@@ -339,7 +339,7 @@ function buildBurger(){
   const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.52,metalness:0,clearcoat:0.3,clearcoatRoughness:0.55,envMapIntensity:0.75});
   const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.85,metalness:0,clearcoat:0.02,envMapIntensity:0.7});
   const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,bumpMap:pattyBumpT,bumpScale:0.014,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.05,clearcoatRoughness:0.75,envMapIntensity:0.5,specularIntensity:0.6});
-  const pattyCapMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.03,clearcoatRoughness:0.85,envMapIntensity:0.45,specularIntensity:0.5});
+  const pattyCapMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,roughness:0.82,metalness:0,clearcoat:0,envMapIntensity:0.25,specularIntensity:0.35});
   const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoPhoto,roughness:0.52,metalness:0,clearcoat:0.18,clearcoatRoughness:0.4,envMapIntensity:0.5,specularIntensity:0.35});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc03324,roughness:0.44,clearcoat:0.22,clearcoatRoughness:0.35,envMapIntensity:0.55,specularIntensity:0.4});
   const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.42,metalness:0,clearcoat:0.28,clearcoatRoughness:0.4,side:THREE.DoubleSide,envMapIntensity:0.9});
@@ -675,4 +675,4 @@ addEventListener('scroll',()=>{document.querySelector('nav').classList.toggle('s
 tick();
 </script>
 </body>
-    </html>
+                          </html>
