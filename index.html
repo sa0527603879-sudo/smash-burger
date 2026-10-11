@@ -306,14 +306,14 @@ function buildBurger(){
   const tomatoTex=tex(512,(x,s)=>{
     const cx=s/2,cy=s/2;
     const g=x.createRadialGradient(cx,cy,8,cx,cy,s/2);
-    g.addColorStop(0,'#d84c3c');g.addColorStop(0.7,'#c23e2e');g.addColorStop(1,'#9c2a1e');
+    g.addColorStop(0,'#d03a2c');g.addColorStop(0.7,'#b52e21');g.addColorStop(1,'#8e1f14');
     x.fillStyle=g;x.fillRect(0,0,s,s);
-    x.fillStyle='rgba(238,116,98,0.55)';
+    x.fillStyle='rgba(226,92,72,0.45)';
     for(let i=0;i<6;i++){const a=i/6*Math.PI*2+0.3;
       x.save();x.translate(cx,cy);x.rotate(a);
       x.beginPath();x.ellipse(s*0.23,0,s*0.14,s*0.055,0,0,7);x.fill();x.restore();}
     const g2=x.createRadialGradient(cx,cy,2,cx,cy,s*0.15);
-    g2.addColorStop(0,'rgba(255,175,152,0.85)');g2.addColorStop(1,'rgba(255,175,152,0)');
+    g2.addColorStop(0,'rgba(244,120,95,0.55)');g2.addColorStop(1,'rgba(244,120,95,0)');
     x.fillStyle=g2;x.beginPath();x.arc(cx,cy,s*0.15,0,7);x.fill();
   });
   const leafTex=tex(256,(x,s)=>{
@@ -329,7 +329,7 @@ function buildBurger(){
   const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.48,metalness:0,clearcoat:0.35,clearcoatRoughness:0.5,envMapIntensity:1.1});
   const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.78,metalness:0,clearcoat:0.08,envMapIntensity:0.9});
   const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyTex,roughness:0.82,metalness:0,clearcoat:0.08,envMapIntensity:0.7});
-  const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoTex,roughness:0.3,metalness:0,clearcoat:0.6,clearcoatRoughness:0.3,envMapIntensity:1.1});
+  const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoTex,roughness:0.42,metalness:0,clearcoat:0.3,clearcoatRoughness:0.5,envMapIntensity:0.65});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc93324,roughness:0.3,clearcoat:0.8,clearcoatRoughness:0.25,envMapIntensity:1.2});
   const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.38,metalness:0,clearcoat:0.35,clearcoatRoughness:0.35,side:THREE.DoubleSide,envMapIntensity:1.3});
 
