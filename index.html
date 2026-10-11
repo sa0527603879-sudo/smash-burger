@@ -82,7 +82,7 @@ nav{
   will-change:transform;
   pointer-events:none;
 }
-.hero-burger img{width:100%;display:block;filter:drop-shadow(0 40px 80px rgba(0,0,0,.6))}
+.hero-burger img{width:100%;display:block;filter:drop-shadow(0 40px 80px rgba(0,0,0,.6));-webkit-mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent),linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent),linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);mask-composite:intersect;}
 .hero-index{
   position:absolute;top:50%;z-index:0;
   font-family:var(--serif);font-size:clamp(120px,30vw,420px);font-weight:300;
