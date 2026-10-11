@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMASH. — Burgers Pressed to Perfection</title>
+<meta name="description" content="SMASH. A burger concept built on fire, pressure and patience.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16110d;
+  --bg2:#1e1710;
+  --cream:#f3ead9;
+  --amber:#e8912d;
+  --muted:#9b8c7a;
+  --serif:'Fraunces',serif;
+  --sans:'Space Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--amber);color:var(--bg)}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px clamp(20px,4vw,56px);
+  mix-blend-mode:difference;
+}
+.nav-logo{font-family:var(--serif);font-weight:900;font-size:22px;letter-spacing:.02em;color:var(--cream);text-decoration:none}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--cream);text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;transition:opacity .3s}
+.nav-links a:hover{opacity:1}
+.nav-cta{
+  border:1px solid var(--cream);border-radius:99px;padding:9px 22px;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:1!important;
+  transition:background .3s,color .3s;
+}
+.nav-cta:hover{background:var(--cream);color:#000}
+@media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 45% at 50% 62%,rgba(232,145,45,.16),transparent 70%);
+}
+.hero-title{
+  position:relative;z-index:2;
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(88px,22vw,340px);
+  line-height:.86;letter-spacing:-.02em;
+  text-align:center;
+  font-variation-settings:'opsz' 144;
+}
+.hero-title .word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.hero-title .ch{display:inline-block;transform:translateY(110%)}
+.hero-dot{color:var(--amber)}
+.hero-sub{
+  position:relative;z-index:2;margin-top:26px;
+  font-size:clamp(13px,1.4vw,16px);letter-spacing:.34em;text-transform:uppercase;color:var(--muted);
+  opacity:0;
+}
+.hero-burger{
+  position:absolute;left:50%;bottom:-6vh;z-index:1;
+  width:clamp(300px,44vw,640px);
+  transform:translateX(-50%);
+  will-change:transform;
+  pointer-events:none;
+}
+.hero-burger img{width:100%;display:block;filter:drop-shadow(0 40px 80px rgba(0,0,0,.6))}
+.hero-index{
+  position:absolute;top:50%;z-index:0;
+  font-family:var(--serif);font-size:clamp(120px,30vw,420px);font-weight:300;
+  color:transparent;-webkit-text-stroke:1px rgba(243,234,217,.07);
+  transform:translateY(-50%);pointer-events:none;user-select:none;
+}
+.scroll-cue{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-cue::after{
+  content:'';width:1px;height:44px;background:linear-gradient(var(--muted),transparent);
+  animation:cue 2s ease-in-out infinite;
+}
+@keyframes cue{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.4);opacity:.4}}
+
+/* ---------- MARQUEE ---------- */
+.marquee{
+  position:relative;z-index:5;
+  border-top:1px solid rgba(243,234,217,.1);border-bottom:1px solid rgba(243,234,217,.1);
+  padding:20px 0;overflow:hidden;white-space:nowrap;background:var(--bg);
+}
+.marquee-track{display:inline-flex;gap:0;will-change:transform}
+.marquee span{
+  font-family:var(--serif);font-weight:600;font-style:italic;
+  font-size:clamp(20px,3vw,34px);padding:0 28px;color:var(--cream);
+}
+.marquee span.o{color:var(--amber);font-style:normal;font-weight:900}
+
+/* ---------- BUILD (assembly) ---------- */
+.build{position:relative;background:var(--bg2)}
+.build-pin{
+  height:100svh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.build-bgword{
+  position:absolute;top:8%;left:50%;transform:translateX(-50%);
+  font-family:var(--serif);font-weight:900;font-size:clamp(48px,9vw,130px);
+  letter-spacing:.06em;color:transparent;-webkit-text-stroke:1px rgba(243,234,217,.12);
+  white-space:nowrap;
+}
+.build-stage{
+  position:relative;width:min(78vw,460px);height:min(78vw,460px);
+}
+.build-layer{
+  position:absolute;left:50%;top:50%;
+  width:100%;
+  transform:translate(-50%,-50%);
+  will-change:transform,opacity;
+}
+.build-layer img{width:100%;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.build-caption{
+  position:absolute;bottom:9%;left:50%;transform:translateX(-50%);
+  text-align:center;width:min(90vw,560px);
+}
+.build-step{
+  font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);
+  margin-bottom:10px;min-height:16px;
+}
+.build-line{font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);font-style:italic;color:var(--cream);min-height:1.4em}
+.build-progress{
+  position:absolute;right:clamp(16px,4vw,56px);top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;
+}
+.build-progress i{
+  width:6px;height:6px;border-radius:50%;background:rgba(243,234,217,.2);
+  transition:background .3s,transform .3s;
+}
+.build-progress i.on{background:var(--amber);transform:scale(1.5)}
+
+/* ---------- STATEMENT ---------- */
+.statement{
+  padding:24vh clamp(20px,6vw,80px);
+  max-width:1200px;margin:0 auto;
+}
+.statement h2{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(34px,6vw,84px);line-height:1.08;letter-spacing:-.01em;
+}
+.statement .w{opacity:.14;transition:opacity .4s ease;display:inline-block}
+.statement .w.lit{opacity:1}
+.statement .accent{color:var(--amber);font-style:italic}
+
+/* ---------- MENU ---------- */
+.menu{padding:8vh clamp(20px,4vw,56px) 14vh;max-width:1500px;margin:0 auto}
+.menu-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid rgba(243,234,217,.14);padding-bottom:22px;margin-bottom:8vh;
+}
+.menu-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(40px,7vw,96px);letter-spacing:-.02em}
+.menu-head span{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,44px)}
+@media(max-width:820px){.menu-grid{grid-template-columns:1fr;gap:64px}}
+.card{position:relative}
+.card-img{
+  position:relative;overflow:hidden;border-radius:18px;aspect-ratio:1/1;
+  background:var(--bg2);
+}
+.card-img img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transform:scale(1.12);
+  transition:transform 1.2s cubic-bezier(.16,1,.3,1);
+}
+.card:hover .card-img img{transform:scale(1.03)}
+.card-num{
+  position:absolute;top:16px;left:18px;font-family:var(--serif);font-style:italic;
+  font-size:15px;color:var(--cream);opacity:.8;z-index:2;
+}
+.card-body{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px}
+.card-name{font-family:var(--serif);font-weight:700;font-size:clamp(20px,2.2vw,28px)}
+.card-desc{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.55;max-width:34ch}
+.card-price{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--amber)}
+
+/* ---------- OUTRO ---------- */
+.outro{
+  position:relative;min-height:92svh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  overflow:hidden;background:var(--bg2);
+}
+.outro h2{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(64px,14vw,220px);line-height:.92;letter-spacing:-.02em;
+}
+.outro h2 em{color:var(--amber)}
+.outro p{margin-top:22px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;font-size:13px}
+.outro-cta{
+  margin-top:44px;display:inline-block;
+  background:var(--amber);color:var(--bg);text-decoration:none;
+  font-size:14px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+  padding:20px 52px;border-radius:99px;
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;
+}
+.outro-cta:hover{transform:scale(1.06);box-shadow:0 20px 60px rgba(232,145,45,.35)}
+.outro-flame{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 55% 40% at 50% 100%,rgba(232,145,45,.13),transparent 70%);
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+  padding:34px clamp(20px,4vw,56px);
+  border-top:1px solid rgba(243,234,217,.1);
+  font-size:13px;color:var(--muted);
+}
+footer .credit{color:var(--muted);text-decoration:none;transition:color .3s}
+footer .credit:hover{color:var(--cream)}
+footer .credit b{color:var(--cream);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  .scroll-cue::after{animation:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">SMASH.</a>
+  <div class="nav-links">
+    <a href="#build">The Build</a>
+    <a href="#menu">Menu</a>
+    <a href="#order" class="nav-cta">Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-index" id="heroIndex">01</div>
+  <h1 class="hero-title" id="heroTitle" aria-label="SMASH."></h1>
+  <p class="hero-sub" id="heroSub">Burgers pressed to perfection</p>
+  <div class="hero-burger" id="heroBurger">
+    <img src="hero-burger.webp" alt="The signature SMASH burger" fetchpriority="high">
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- THE BUILD -->
+<section class="build" id="build">
+  <div class="build-pin" id="buildPin">
+    <div class="build-bgword">THE&nbsp;BUILD</div>
+    <div class="build-stage" id="buildStage">
+      <div class="build-layer" data-layer="0" data-w="0.96"><img src="layer-bun-bottom.webp" alt=""></div>
+      <div class="build-layer" data-layer="1" data-w="1"><img src="layer-patty.webp" alt=""></div>
+      <div class="build-layer" data-layer="2" data-w="0.88"><img src="layer-cheese.webp" alt=""></div>
+      <div class="build-layer" data-layer="3" data-w="0.98"><img src="layer-lettuce.webp" alt=""></div>
+      <div class="build-layer" data-layer="4" data-w="0.94"><img src="layer-bun-top.webp" alt=""></div>
+    </div>
+    <div class="build-caption">
+      <div class="build-step" id="buildStep">01 / 05 — THE FOUNDATION</div>
+      <div class="build-line" id="buildLine">A toasted brioche base. Everything starts here.</div>
+    </div>
+    <div class="build-progress" id="buildProgress">
+      <i class="on"></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <h2 id="statementText">Pressed thin on a screaming hot grill. <span class="accent">Seared</span> until the crust crackles. Built layer by layer, <span class="accent">never</span> rushed.</h2>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-head">
+    <h2>THE MENU</h2>
+    <span>Three ways to smash</span>
+  </div>
+  <div class="menu-grid">
+    <div class="card" data-reveal>
+      <div class="card-img"><span class="card-num">n.01</span><img src="menu-classic.webp" alt="The Classic Smash" loading="lazy"></div>
+      <div class="card-body"><div><div class="card-name">The Classic</div><div class="card-desc">Single smashed patty, aged cheddar, pickles, house sauce.</div></div><div class="card-price">$12</div></div>
+    </div>
+    <div class="card" data-reveal>
+      <div class="card-img"><span class="card-num">n.02</span><img src="menu-double.webp" alt="Double Trouble" loading="lazy"></div>
+      <div class="card-body"><div><div class="card-name">Double Trouble</div><div class="card-desc">Two patties, double cheddar, caramelized onion, extra sauce.</div></div><div class="card-price">$16</div></div>
+    </div>
+    <div class="card" data-reveal>
+      <div class="card-img"><span class="card-num">n.03</span><img src="menu-ember.webp" alt="The Ember" loading="lazy"></div>
+      <div class="card-body"><div><div class="card-name">The Ember</div><div class="card-desc">Jalapeño, sriracha mayo, charred pepper relish. Bring water.</div></div><div class="card-price">$14</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTRO -->
+<section class="outro" id="order">
+  <div class="outro-flame"></div>
+  <h2 id="outroTitle">GET<br><em>SMASHED.</em></h2>
+  <p>Open daily — 12:00 to midnight</p>
+  <a class="outro-cta" href="#top">Order Now</a>
+</section>
+
+<footer>
+  <span>© 2026 SMASH. — a concept by sligi</span>
+  <a class="credit" href="https://sligi.co.il" target="_blank" rel="noopener">built by <b>sligi</b></a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = typeof gsap !== 'undefined';
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+
+  /* ---- hero title split ---- */
+  var title = document.getElementById('heroTitle');
+  var word = 'SMASH';
+  word.split('').forEach(function(c){
+    var w = document.createElement('span'); w.className='word';
+    var s = document.createElement('span'); s.className='ch'; s.textContent=c;
+    w.appendChild(s); title.appendChild(w);
+  });
+  var dot = document.createElement('span'); dot.className='word';
+  var d = document.createElement('span'); d.className='ch hero-dot'; d.textContent='.';
+  dot.appendChild(d); title.appendChild(dot);
+
+  if (hasGsap && !reduced){
+    var tl = gsap.timeline({defaults:{ease:'power4.out'}});
+    tl.to('.hero-title .ch',{y:0,duration:1.3,stagger:0.06,delay:0.25})
+      .to('#heroSub',{opacity:1,duration:1},'-=0.7')
+      .from('#heroBurger',{yPercent:60,opacity:0,rotate:-8,duration:1.6,ease:'power3.out'},0.35);
+
+    gsap.to('#heroBurger',{
+      yPercent:24, rotate:6, scale:1.06, ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
+    });
+    gsap.to('#heroTitle',{
+      yPercent:-38, ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
+    });
+    gsap.to('#heroIndex',{
+      yPercent:-140, ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
+    });
+  } else {
+    document.querySelectorAll('.hero-title .ch').forEach(function(c){c.style.transform='none'});
+    document.getElementById('heroSub').style.opacity=1;
+  }
+
+  /* ---- marquee ---- */
+  var track = document.getElementById('marqueeTrack');
+  var phrase = '<span>NO SHORTCUTS</span><span class="o">•</span><span>JUST SMASH</span><span class="o">•</span>';
+  track.innerHTML = phrase.repeat(8);
+  if (hasGsap && !reduced){
+    var mx = 0, lastW = 0;
+    function marqueeWidth(){ return track.scrollWidth/2 || 1; }
+    gsap.ticker.add(function(){
+      var w = marqueeWidth();
+      mx -= 1.1;
+      if (mx <= -w) mx += w;
+      track.style.transform = 'translate3d('+mx+'px,0,0)';
+    });
+    ScrollTrigger.create({
+      trigger:'.marquee',start:'top bottom',end:'bottom top',
+      onUpdate:function(self){ mx -= self.getVelocity()/-160; }
+    });
+  }
+
+  /* ---- THE BUILD assembly ---- */
+  var steps = [
+    {step:'01 / 05 — THE FOUNDATION', line:'A toasted brioche base. Everything starts here.'},
+    {step:'02 / 05 — THE SMASH', line:'Beef pressed thin, seared hard, crust crackling.'},
+    {step:'03 / 05 — THE MELT', line:'Cheddar, poured over heat until it gives up.'},
+    {step:'04 / 05 — THE CRUNCH', line:'Cold crisp lettuce against the warm crust.'},
+    {step:'05 / 05 — THE CROWN', line:'The bun lands. Nothing else to say.'}
+  ];
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.build-layer'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#buildProgress i'));
+  var stepEl = document.getElementById('buildStep');
+  var lineEl = document.getElementById('buildLine');
+
+  /* dynamic stack layout: bottom bun baseline, layers tuck upward */
+  function layoutStack(){
+    var stage = document.getElementById('buildStage');
+    var W = stage.offsetWidth, H = stage.offsetHeight;
+    var bottomEdge = H * 0.34; /* px below center */
+    var y = bottomEdge;
+    var centers = [];
+    layers.forEach(function(l,i){
+      var img = l.querySelector('img');
+      var w = W * parseFloat(l.dataset.w||'1');
+      var h = w * (img.naturalHeight/img.naturalWidth || 0.5);
+      l.style.width = w+'px';
+      if(i===0){ y -= h/2; centers.push(y); y -= h/2; }
+      else { y += h*0.14; y -= h/2; centers.push(y); y -= h/2; }
+    });
+    return centers;
+  }
+  var restY = layoutStack();
+  window.addEventListener('load', function(){ restY = layoutStack(); if(!hasGsap||reduced){applyRest();} else { ScrollTrigger.refresh(); } });
+  window.addEventListener('resize', function(){ restY = layoutStack(); if(!hasGsap||reduced){applyRest();} else {ScrollTrigger.refresh();} });
+  function applyRest(){
+    layers.forEach(function(l,i){ l.style.transform='translate(-50%,-50%) translateY('+restY[i]+'px)'; l.style.opacity=1; });
+  }
+
+  if (hasGsap && !reduced){
+    layers.forEach(function(l,i){
+      gsap.set(l,{y: i===0 ? restY[0] : restY[i]-420, opacity: i===0?1:0, rotate: i===0?0:(i%2? 9:-9)});
+    });
+    var buildTl = gsap.timeline({
+      scrollTrigger:{
+        trigger:'#build', start:'top top', end:'+=' + (layers.length*90) + '%',
+        pin:'#buildPin', scrub:0.6, invalidateOnRefresh:true,
+        onRefresh:function(){ restY = layoutStack(); layers.forEach(function(l,i){ if(i===0) gsap.set(l,{y:restY[0]}); }); },
+        onUpdate:function(self){
+          var idx = Math.min(layers.length-1, Math.floor(self.progress * layers.length));
+          dots.forEach(function(dd,j){ dd.classList.toggle('on', j<=idx); });
+          if (steps[idx] && stepEl.textContent !== steps[idx].step){
+            stepEl.textContent = steps[idx].step;
+            lineEl.textContent = steps[idx].line;
+          }
+        }
+      }
+    });
+    layers.forEach(function(l,i){
+      if(i===0) return;
+      buildTl.to(l,{y:function(){return restY[i];},opacity:1,rotate:0,ease:'bounce.out',duration:1},(i-1)+0.35);
+    });
+    buildTl.to('#buildStage',{scale:1.04,duration:0.6},'>-0.2');
+  } else {
+    applyRest();
+  }
+
+  /* ---- statement word reveal ---- */
+  var st = document.getElementById('statementText');
+  (function(){
+    var walk = function(node){
+      Array.prototype.slice.call(node.childNodes).forEach(function(n){
+        if(n.nodeType===3){
+          var frag=document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function(part){
+            if(/^\s+$/.test(part)||part===''){frag.appendChild(document.createTextNode(part));}
+            else{var s=document.createElement('span');s.className='w';s.textContent=part;frag.appendChild(s);}
+          });
+          node.replaceChild(frag,n);
+        } else if(n.nodeType===1){ walk(n); }
+      });
+    };
+    walk(st);
+  })();
+  if (hasGsap && !reduced){
+    var words = st.querySelectorAll('.w');
+    ScrollTrigger.create({
+      trigger:st, start:'top 78%', end:'bottom 45%', scrub:true,
+      onUpdate:function(self){
+        var n = Math.floor(self.progress * words.length);
+        words.forEach(function(w,i){ w.classList.toggle('lit', i<=n); });
+      }
+    });
+  } else {
+    st.querySelectorAll('.w').forEach(function(w){w.classList.add('lit')});
+  }
+
+  /* ---- menu reveals ---- */
+  if (hasGsap && !reduced){
+    document.querySelectorAll('[data-reveal]').forEach(function(card,i){
+      gsap.from(card,{
+        y:80, opacity:0, duration:1.1, ease:'power3.out', delay:i*0.08,
+        scrollTrigger:{trigger:card,start:'top 88%'}
+      });
+      var img = card.querySelector('img');
+      gsap.fromTo(img,{yPercent:-8},{yPercent:8,ease:'none',
+        scrollTrigger:{trigger:card,start:'top bottom',end:'bottom top',scrub:true}});
+    });
+    gsap.from('#outroTitle',{
+      scale:0.82, opacity:0, duration:1.2, ease:'power3.out',
+      scrollTrigger:{trigger:'.outro',start:'top 70%'}
+    });
+  }
+})();
+</script>
+</body>
+</html>
