@@ -306,7 +306,7 @@ function buildBurger(){
   const tomatoTex=tex(512,(x,s)=>{
     const cx=s/2,cy=s/2;
     const g=x.createRadialGradient(cx,cy,8,cx,cy,s/2);
-    g.addColorStop(0,'#d03a2c');g.addColorStop(0.7,'#b52e21');g.addColorStop(1,'#8e1f14');
+    g.addColorStop(0,'#c4261a');g.addColorStop(0.7,'#a81e12');g.addColorStop(1,'#7c1408');
     x.fillStyle=g;x.fillRect(0,0,s,s);
     x.fillStyle='rgba(226,92,72,0.45)';
     for(let i=0;i<6;i++){const a=i/6*Math.PI*2+0.3;
@@ -329,7 +329,7 @@ function buildBurger(){
   const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.48,metalness:0,clearcoat:0.35,clearcoatRoughness:0.5,envMapIntensity:1.1});
   const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.78,metalness:0,clearcoat:0.08,envMapIntensity:0.9});
   const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyTex,roughness:0.82,metalness:0,clearcoat:0.08,envMapIntensity:0.7});
-  const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoTex,roughness:0.58,metalness:0,clearcoat:0.12,clearcoatRoughness:0.6,envMapIntensity:0.25});
+  const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoTex,roughness:0.6,metalness:0,clearcoat:0.05,clearcoatRoughness:0.7,envMapIntensity:0.08});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc93324,roughness:0.3,clearcoat:0.8,clearcoatRoughness:0.25,envMapIntensity:1.2});
   const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.38,metalness:0,clearcoat:0.35,clearcoatRoughness:0.35,side:THREE.DoubleSide,envMapIntensity:1.3});
 
