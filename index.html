@@ -298,9 +298,9 @@ function buildBurger(){
       x.beginPath();x.arc(px,py,r,0,7);x.fill();}
   });
   const crumbTex=tex(512,(x,s)=>{
-    x.fillStyle='#eac48c';x.fillRect(0,0,s,s);
+    x.fillStyle='#eecfa0';x.fillRect(0,0,s,s);
     for(let i=0;i<3400;i++){const px=Math.random()*s,py=Math.random()*s,r=Math.random()*2.2+0.5;
-      x.fillStyle=Math.random()<0.6?'rgba(186,134,74,0.22)':'rgba(255,238,204,0.22)';
+      x.fillStyle=Math.random()<0.45?'rgba(198,150,92,0.13)':'rgba(255,240,208,0.16)';
       x.beginPath();x.arc(px,py,r,0,7);x.fill();}
   });
   const pattyTex=tex(512,(x,s)=>{
@@ -325,7 +325,7 @@ function buildBurger(){
   });
   const leafTex=tex(256,(x,s)=>{
     const g=x.createLinearGradient(0,s,s,0);
-    g.addColorStop(0,'#5da235');g.addColorStop(0.5,'#7dc24a');g.addColorStop(1,'#a3d768');
+    g.addColorStop(0,'#4e9a2e');g.addColorStop(0.5,'#71bb3f');g.addColorStop(1,'#9bd45e');
     x.fillStyle=g;x.fillRect(0,0,s,s);
     for(let i=0;i<900;i++){const px=Math.random()*s,py=Math.random()*s,r=Math.random()*1.6+0.3;
       x.fillStyle=Math.random()<0.5?'rgba(46,96,24,0.14)':'rgba(220,240,170,0.12)';
@@ -337,8 +337,8 @@ function buildBurger(){
   });
 
   const bunMat=new THREE.MeshPhysicalMaterial({map:bunTex,roughness:0.52,metalness:0,clearcoat:0.3,clearcoatRoughness:0.55,envMapIntensity:0.75});
-  const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.78,metalness:0,clearcoat:0.08,envMapIntensity:0.9});
-  const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,bumpMap:pattyBumpT,bumpScale:0.02,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.16,clearcoatRoughness:0.5,envMapIntensity:0.65});
+  const crumbMat=new THREE.MeshPhysicalMaterial({map:crumbTex,roughness:0.85,metalness:0,clearcoat:0.02,envMapIntensity:0.7});
+  const pattyMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,bumpMap:pattyBumpT,bumpScale:0.014,roughnessMap:pattyRoughT,roughness:1,metalness:0,clearcoat:0.05,clearcoatRoughness:0.75,envMapIntensity:0.5,specularIntensity:0.6});
   const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoPhoto,roughness:0.52,metalness:0,clearcoat:0.18,clearcoatRoughness:0.4,envMapIntensity:0.5,specularIntensity:0.35});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc03324,roughness:0.44,clearcoat:0.22,clearcoatRoughness:0.35,envMapIntensity:0.55,specularIntensity:0.4});
   const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.42,metalness:0,clearcoat:0.28,clearcoatRoughness:0.4,side:THREE.DoubleSide,envMapIntensity:0.9});
@@ -376,9 +376,11 @@ function buildBurger(){
   const pattyGeo=new THREE.CylinderGeometry(0.166,0.170,0.045,180,8);
   { // irregular lacy crust rim: angular lobes + fine crumble, strongest at rim edges
     const p=pattyGeo.attributes.position;
+    const nrm=pattyGeo.attributes.normal;
     for(let i=0;i<p.count;i++){
       const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
       const ang=Math.atan2(z,x),rad=Math.sqrt(x*x+z*z);
+      if(Math.abs(nrm.getY(i))>0.5){p.setY(i,y+(fbm(x*38+1.7,z*38+4.2)-0.5)*0.004);continue;} // cap faces: no radial fan grooves
       if(rad<0.02)continue;
       const rim=Math.min(1,Math.abs(y)/0.0225);
       const lobe=fbm(Math.cos(ang)*2.2+5.5,Math.sin(ang)*2.2+7.7)*2-1;
@@ -402,13 +404,17 @@ function buildBurger(){
   for(let i=0;i<lp.count;i++){
     const x=lp.getX(i),z=lp.getZ(i);
     const tip=(z+0.077)/0.21;
-    const side=Math.abs(x)/0.075;
+    const wK=0.26+0.74*Math.pow(Math.sin(Math.PI*Math.min(1,tip*1.08)),0.7); // lobed leaf outline: narrow stem, wide mid, tapering tip
+    let xx=x*wK;
+    xx+=0.008*Math.sin(tip*24+fbm(x*8,z*8)*4)*(x>0?1:-1)*tip;                 // wavy serrated edge
+    const side=Math.abs(xx)/0.075;
     let y=0;
-    y+=0.020*side*side;
-    y+=0.026*Math.pow(Math.max(0,tip),2.4);
-    y+=0.007*Math.sin(x*38+fbm(x*9,z*9)*4)*tip;
-    y+=fbm(x*14+3,z*14+8)*0.006-0.003;
-    y-=0.010*Math.sin(Math.PI*Math.min(1,tip*1.15));
+    y+=0.024*side*side;
+    y+=0.030*Math.pow(Math.max(0,tip),2.4);
+    y+=0.009*Math.sin(tip*30+xx*24+fbm(xx*8,z*8)*4)*tip*Math.max(0.3,side);   // ruffle strongest at edges
+    y+=fbm(xx*14+3,z*14+8)*0.007-0.003;
+    y-=0.011*Math.sin(Math.PI*Math.min(1,tip*1.15));
+    lp.setX(i,xx);
     lp.setY(i,y);
   }
   leafBase.computeVertexNormals();
@@ -668,4 +674,4 @@ addEventListener('scroll',()=>{document.querySelector('nav').classList.toggle('s
 tick();
 </script>
 </body>
-</html>
+                          </html>
