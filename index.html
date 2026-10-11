@@ -325,14 +325,18 @@ function buildBurger(){
   });
   const leafTex=tex(256,(x,s)=>{
     const g=x.createLinearGradient(0,s,s,0);
-    g.addColorStop(0,'#4e9a2e');g.addColorStop(0.5,'#71bb3f');g.addColorStop(1,'#9bd45e');
+    g.addColorStop(0,'#2f7a1e');g.addColorStop(0.45,'#4a9e2e');g.addColorStop(0.8,'#68b93e');g.addColorStop(1,'#8fd456');
     x.fillStyle=g;x.fillRect(0,0,s,s);
-    for(let i=0;i<900;i++){const px=Math.random()*s,py=Math.random()*s,r=Math.random()*1.6+0.3;
-      x.fillStyle=Math.random()<0.5?'rgba(46,96,24,0.14)':'rgba(220,240,170,0.12)';
+    for(let i=0;i<26;i++){const px=Math.random()*s,py=Math.random()*s,r=12+Math.random()*36;
+      const gg=x.createRadialGradient(px,py,1,px,py,r);
+      gg.addColorStop(0,Math.random()<0.55?'rgba(28,84,16,0.20)':'rgba(190,226,120,0.18)');gg.addColorStop(1,'rgba(0,0,0,0)');
+      x.fillStyle=gg;x.beginPath();x.arc(px,py,r,0,7);x.fill();}
+    for(let i=0;i<700;i++){const px=Math.random()*s,py=Math.random()*s,r=Math.random()*1.4+0.3;
+      x.fillStyle=Math.random()<0.5?'rgba(24,64,14,0.16)':'rgba(214,240,160,0.14)';
       x.beginPath();x.arc(px,py,r,0,7);x.fill();}
-    x.strokeStyle='rgba(226,242,190,0.5)';
-    x.lineWidth=3;x.beginPath();x.moveTo(0,s*0.95);x.quadraticCurveTo(s*0.5,s*0.5,s*0.95,s*0.15);x.stroke();
-    x.lineWidth=1.2;
+    x.strokeStyle='rgba(216,236,170,0.55)';
+    x.lineWidth=3.5;x.beginPath();x.moveTo(0,s*0.95);x.quadraticCurveTo(s*0.5,s*0.5,s*0.95,s*0.15);x.stroke();
+    x.lineWidth=1.3;
     for(let i=1;i<7;i++){x.beginPath();x.moveTo(s*0.1*i,s*0.93);x.quadraticCurveTo(s*0.45,s*0.6-i*6,s*0.82,s*0.1+i*9);x.stroke();}
   });
 
@@ -342,7 +346,8 @@ function buildBurger(){
   const pattyCapMat=new THREE.MeshPhysicalMaterial({map:pattyPhoto,roughness:0.82,metalness:0,clearcoat:0,envMapIntensity:0.25,specularIntensity:0.35});
   const tomatoMat=new THREE.MeshPhysicalMaterial({map:tomatoPhoto,roughness:0.52,metalness:0,clearcoat:0.18,clearcoatRoughness:0.4,envMapIntensity:0.5,specularIntensity:0.35});
   const tomatoSide=new THREE.MeshPhysicalMaterial({color:0xc03324,roughness:0.44,clearcoat:0.22,clearcoatRoughness:0.35,envMapIntensity:0.55,specularIntensity:0.4});
-  const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.42,metalness:0,clearcoat:0.28,clearcoatRoughness:0.4,side:THREE.DoubleSide,envMapIntensity:0.9});
+  const leafMat=new THREE.MeshPhysicalMaterial({map:leafTex,roughness:0.56,metalness:0,clearcoat:0.08,clearcoatRoughness:0.7,side:THREE.DoubleSide,envMapIntensity:0.5,specularIntensity:0.45,vertexColors:true});
+  const leafUnderMat=new THREE.MeshStandardMaterial({color:0x2c6b1c,roughness:0.85,side:THREE.DoubleSide});
 
   function displaceRadial(geo,amp,freq){
     const p=geo.attributes.position;
@@ -419,13 +424,29 @@ function buildBurger(){
     lp.setY(i,y);
   }
   leafBase.computeVertexNormals();
+  { // per-vertex hue variation: deep green <-> yellow-green patches
+    const lc=new Float32Array(lp.count*3);
+    for(let i=0;i<lp.count;i++){
+      const x=lp.getX(i),z=lp.getZ(i);
+      const v=fbm(x*10+31,z*10+17),warm=fbm(x*5+3,z*5+11);
+      lc[i*3]=0.82+0.28*warm;
+      lc[i*3+1]=0.88+0.22*v;
+      lc[i*3+2]=0.72+0.30*(1-warm);
+    }
+    leafBase.setAttribute('color',new THREE.BufferAttribute(lc,3));
+  }
+  const leafMats=[leafMat,leafMat.clone(),leafMat.clone()];
+  leafMats[1].color.set(0xdcecc0);leafMats[2].color.set(0xc8e0a8);
   for(let i=0;i<9;i++){
-    const leaf=new THREE.Mesh(leafBase,leafMat);
+    const leaf=new THREE.Mesh(leafBase,leafMats[i%3]);
     leaf.rotation.y=i/9*Math.PI*2+h2(i,3)*0.5;
     leaf.rotation.x=(h2(i,5)-0.5)*0.22;
     leaf.rotation.z=(h2(i,11)-0.5)*0.18;
     leaf.position.y=(i%3)*0.0045;
     leaf.scale.set(0.9+h2(i,7)*0.4,1,0.95+h2(i,13)*0.35);
+    const under=new THREE.Mesh(leafBase,leafUnderMat);
+    under.position.y=-0.0028;under.scale.set(0.985,1,0.985);
+    leaf.add(under);
     salad.add(leaf);
   }
   G.add(salad);
